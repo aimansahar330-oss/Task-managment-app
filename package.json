@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "cd src && npm install && npm run build",
-    "vercel-build": "cd src && npm install && npm run build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "vite build",
+    "build:backend": "cd server && npm install",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -37,8 +39,7 @@
     "nodemon": "^3.1.14",
     "vite": "^8.0.12"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "main": "eslint.config.js",
+  "description": "Flow Task System",
   "keywords": [],
   "author": "",
   "license": "ISC"
