@@ -27,22 +27,49 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/user", userRoutes);
 
 
-// DB + server start
-const startServer = async () => {
+
+
+// ✅ Health Check
+app.get("/api/health", (req, res) => {
+  res.json({ status: "OK", message: "Server is running!" });
+});
+
+// ✅ Database Connection (Promise based)
+let isConnected = false;
+
+const connectToDB = async () => {
+  if (isConnected) return;
   try {
     await connectDB();
-
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(` Server running on port ${PORT}`);
-    });
-
+    isConnected = true;
+    console.log("✅ MongoDB Connected");
   } catch (error) {
-    console.log(" DB Connection Failed:", error);
+    console.log("❌ MongoDB Connection Error:", error);
   }
 };
-console.log("SERVER STARTED");
-console.log("AUTH ROUTES LOADED");
+
+// ✅ Vercel Handler
+export default async function handler(req, res) {
+  await connectToDB();
+  return app(req, res);
+}
+
+// // DB + server start
+// const startServer = async () => {
+//   try {
+//     await connectDB();
+
+//     const PORT = process.env.PORT || 5000;
+//     app.listen(PORT, () => {
+//       console.log(` Server running on port ${PORT}`);
+//     });
+
+//   } catch (error) {
+//     console.log(" DB Connection Failed:", error);
+//   }
+// };
+// console.log("SERVER STARTED");
+// console.log("AUTH ROUTES LOADED");
 
 
-startServer();
+// startServer();
