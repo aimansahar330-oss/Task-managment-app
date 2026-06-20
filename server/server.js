@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import mongoose, { trusted } from "mongoose";
 
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -14,7 +14,7 @@ const app = express();
 
 // middleware
 app.use(cors({
-  origin: "*",
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
