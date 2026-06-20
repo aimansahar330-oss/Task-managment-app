@@ -74,27 +74,34 @@ function Register() {
     return (
         <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
 
-            {/*  TOP / LEFT PANEL (RESPONSIVE) */}
-            <div className="w-full lg:w-1/2 relative overflow-hidden bg-[#0f172a]">
+            {/* TOP / LEFT PANEL (RESPONSIVE) - FIXED AREA */}
+            <div className="w-full lg:w-1/2 relative overflow-hidden bg-[#0f172a] min-h-[40vh] md:min-h-[50vh] lg:min-h-screen">
 
                 {/* glow */}
                 <div className="absolute -top-20 -left-20 w-72 h-72 bg-indigo-600 rounded-full blur-3xl opacity-30"></div>
                 <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-500 rounded-full blur-3xl opacity-20"></div>
 
-                {/*  CENTER FIX + RESPONSIVE SAFE */}
+                {/* CENTER FIX + RESPONSIVE SAFE */}
                 <div className="relative z-10 flex flex-col justify-center items-center text-center text-white
     h-full px-6 py-10 sm:py-14 lg:p-0">
 
-         <div className="absolute top-12 left-8 flex items-center">
-                        <h1 className="text-4xl font-extrabold relative">
+                    <div className="absolute top-4 md:top-12 left-4 md:left-8 flex items-center">
+                        <h1 className="font-extrabold relative">
 
                             {/* glow layer */}
                             <span className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-xl opacity-50"></span>
 
-                            {/* main text */}
+                            {/* main text - FIXED ANIMATION FOR ALL SCREENS */}
                             <span
-                                className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-bounce"
-                                style={{ fontFamily: "Poppins, sans-serif" }}
+                                className="block text-3xl sm:text-4xl md:text-5xl lg:text-4xl 
+    bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+    bg-clip-text text-transparent 
+    animate-pulse"
+                                style={{ 
+                                    fontFamily: "Poppins, sans-serif",
+                                    animationDuration: "2s",
+                                    animationIterationCount: "infinite"
+                                }}
                             >
                                 Flow Task
                             </span>
@@ -102,10 +109,10 @@ function Register() {
                         </h1>
                     </div>
 
-                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-8 sm:mt-10 md:mt-12">
                         Join Flow Task
                     </h1>
-                    
+
                     <p className="mt-3 text-gray-300 text-sm sm:text-base max-w-xs sm:max-w-sm">
                         Create your account and start managing your tasks smarter and faster.
                     </p>
@@ -116,7 +123,7 @@ function Register() {
                 </div>
             </div>
 
-            {/*  FORM SECTION */}
+            {/* FORM SECTION */}
             <div className="flex w-full lg:w-1/2 items-center justify-center px-4 py-8 sm:px-6 lg:px-10">
 
                 <div className="w-full max-w-md">
@@ -221,18 +228,24 @@ function Register() {
                     </p>
                     {showPopup && (
                         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                            <div className="bg-white p-6 rounded-xl text-center w-75">
+                            <div className="bg-white p-6 rounded-xl text-center w-[320px] shadow-xl">
 
-                                <p className="text-lg font-medium mt-2">Registration Successful</p>
+                                <div className="text-green-500 text-4xl mb-2">✓</div>
+
+                                <h2 className="text-lg font-bold">Registration Successful</h2>
+
+                                <p className="text-gray-500 mt-2 text-sm">
+                                    Your account has been created successfully!
+                                </p>
 
                                 <button
                                     onClick={() => {
                                         setShowPopup(false);
-                                        navigate("/login");
+                                        navigate("/");
                                     }}
-                                    className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded"
+                                    className="mt-4 w-full bg-indigo-600 hover:bg-indigo-400 text-white py-2 rounded-lg font-semibold"
                                 >
-                                    OK
+                                    Go to Login
                                 </button>
                             </div>
                         </div>

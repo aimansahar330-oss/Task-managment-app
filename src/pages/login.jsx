@@ -10,7 +10,6 @@ function Login() {
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
 
-
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -27,7 +26,6 @@ function Login() {
             localStorage.setItem("user", JSON.stringify(res.data.user));
             navigate("/dashboard");
 
-            //  minimum loading time UX (2 sec feel)
             setTimeout(() => {
                 setLoading(false);
                 setShowPopup(true);
@@ -38,10 +36,12 @@ function Login() {
             alert(error.response?.data?.message || "Invalid email or password");
         }
     };
-    return (
-        <div className="h-screen overflow-hidden flex flex-col lg:flex-row bg-gray-50">
 
-            <div className="w-full lg:w-1/2 relative overflow-hidden bg-[#0f172a]">
+    return (
+        <div className="h-screen  flex flex-col lg:flex-row bg-gray-50">
+
+            {/* BLUE SECTION - FIXED FOR ALL SCREENS */}
+            <div className="w-full lg:w-1/2 relative overflow-hidden bg-[#0f172a] min-h-[40vh] lg:min-h-screen">
 
                 {/* glow */}
                 <div className="absolute -top-20 -left-20 w-72 h-72 bg-indigo-600 rounded-full blur-3xl opacity-30"></div>
@@ -51,16 +51,23 @@ function Login() {
                 <div className="relative z-10 flex flex-col justify-center items-center text-center text-white
     h-full px-6 py-10 sm:py-14 lg:p-0">
 
-                    <div className="absolute top-12 left-8 flex items-center">
-                        <h1 className="text-4xl font-extrabold relative">
+                    <div className="absolute top-4 md:top-12 left-4 md:left-8 flex items-center">
+                        <h1 className="font-extrabold relative">
 
                             {/* glow layer */}
                             <span className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-xl opacity-50"></span>
 
-                            {/* main text */}
+                            {/* main text - FIXED ANIMATION FOR ALL SCREENS */}
                             <span
-                                className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-bounce"
-                                style={{ fontFamily: "Poppins, sans-serif" }}
+                                className="block text-3xl sm:text-4xl md:text-5xl lg:text-4xl 
+    bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+    bg-clip-text text-transparent 
+    animate-pulse"
+                                style={{ 
+                                    fontFamily: "Poppins, sans-serif",
+                                    animationDuration: "2s",
+                                    animationIterationCount: "infinite"
+                                }}
                             >
                                 Flow Task
                             </span>
@@ -135,7 +142,8 @@ function Login() {
 
                                 <p
                                     onClick={() => navigate("/forgot-password")}
-                                    className="text-indigo-600 hover:underline">
+                                    className="text-indigo-600 hover:underline cursor-pointer"
+                                >
                                     Forgot password?
                                 </p>
                             </div>
@@ -156,7 +164,7 @@ function Login() {
                             </button>
                             {/* REGISTER LINK */}
                             <p className="text-center text-sm text-gray-500 mt-4 sm:mt-6">
-                                Don’t have an account?{" "}
+                                Don't have an account?{" "}
                                 <span
                                     onClick={() => navigate("/register")}
                                     className="text-indigo-600 cursor-pointer hover:underline"
@@ -172,14 +180,12 @@ function Login() {
                         © 2026 Flow Task System
                     </p>
 
-
-
                     {showPopup && (
                         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
                             <div className="bg-white p-6 rounded-xl text-center w-[320px] shadow-xl">
 
-                                <div className="text-green-500 text-4xl mb-2"></div>
+                                <div className="text-green-500 text-4xl mb-2">✓</div>
 
                                 <h2 className="text-lg font-bold">Login Successful</h2>
 
@@ -202,7 +208,6 @@ function Login() {
 
                         </div>
                     )}
-
 
                 </div>
             </div>
