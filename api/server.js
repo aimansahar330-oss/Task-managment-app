@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import serverless from "serverless-http";
+
+
 
 import connectDB from "../server/config/db.js";
 import authRoutes from "../server/routes/authRoutes.js";
@@ -30,6 +33,8 @@ const connectToDB = async () => {
   await connectDB();
   isConnected = true;
 };
+
+const handler = serverless(app);
 
 export default async function handler(req, res) {
   await connectToDB();
