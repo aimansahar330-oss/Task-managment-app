@@ -3,8 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import serverless from "serverless-http";
 
-
-
 import connectDB from "../server/config/db.js";
 import authRoutes from "../server/routes/authRoutes.js";
 import taskRoutes from "../server/routes/taskRoutes.js";
@@ -17,34 +15,36 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ❗ NO /api here
+// routes
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/user", userRoutes);
 
+// health check
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
+// DB connection
 let isConnected = false;
 
 const connectToDB = async () => {
-  try {
-    if (!process.env.MONGO_URI) {
-      throw new Error("MONGO_URI missing ❌");
-    }
+  if (isConnected) return;
 
-    await connectDB();
-    console.log("MongoDB Connected ✅");
-
-  } catch (err) {
-    console.log("Mongo Error ❌", err.message);
-    throw err; // 👈 important for logs
+  if (!process.env.MONGO_URI) {
+    throw new Error("MONGO_URI missing ❌");
   }
-};
-const handler = serverless(app);
 
-export default async function handler(req, res) {
+  await connectDB();
+  isConnected = true;
+
+  console.log("MongoDB Connected ✅");
+};
+
+// ✅ FINAL EXPORT (ONLY ONE HANDLER)
+export default async function (req, res) {
   await connectToDB();
-  return app(req, res);
+
+  const handler = serverless(app);
+  return handler(req, res);
 }
