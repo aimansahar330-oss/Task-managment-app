@@ -29,11 +29,19 @@ app.get("/health", (req, res) => {
 let isConnected = false;
 
 const connectToDB = async () => {
-  if (isConnected) return;
-  await connectDB();
-  isConnected = true;
-};
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI missing ❌");
+    }
 
+    await connectDB();
+    console.log("MongoDB Connected ✅");
+
+  } catch (err) {
+    console.log("Mongo Error ❌", err.message);
+    throw err; // 👈 important for logs
+  }
+};
 const handler = serverless(app);
 
 export default async function handler(req, res) {
