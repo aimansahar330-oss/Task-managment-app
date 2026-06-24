@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ❗ IMPORTANT: /api remove
+// ❗ NO /api here
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/user", userRoutes);
@@ -23,7 +23,6 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
-// DB connection (serverless safe)
 let isConnected = false;
 
 const connectToDB = async () => {
@@ -32,7 +31,6 @@ const connectToDB = async () => {
   isConnected = true;
 };
 
-// ✅ Vercel handler
 export default async function handler(req, res) {
   await connectToDB();
   return app(req, res);
